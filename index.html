@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sunny Khan — Issue No. 22</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0d0c0b;
+    --ink-soft:#171513;
+    --bone:#ece3d2;
+    --bone-dim:#c9bda5;
+    --amber:#c1742f;
+    --amber-soft:#e0a25f;
+    --olive:#5d6243;
+    --rule: rgba(236,227,210,0.18);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--bone);
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--amber);color:var(--ink);}
+
+  .display{font-family:'Bebas Neue',sans-serif; letter-spacing:0.04em;}
+  .serif{font-family:'Cormorant Garamond',serif;}
+
+  /* ===== grain overlay ===== */
+  .grain{
+    position:fixed; inset:0; pointer-events:none; z-index:50;
+    opacity:0.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ===== top masthead bar ===== */
+  .masthead{
+    position:fixed; top:0; left:0; right:0; z-index:40;
+    display:flex; justify-content:space-between; align-items:center;
+    padding:20px 5vw;
+    font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+    pointer-events:none;
+    background:linear-gradient(180deg, rgba(13,12,11,0.55) 0%, rgba(13,12,11,0) 100%);
+  }
+  .masthead span{color:var(--bone); text-shadow:0 1px 6px rgba(0,0,0,0.6);}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;
+    min-height:100svh;
+    display:flex;
+    align-items:flex-end;
+    overflow:hidden;
+  }
+  .hero-img{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    object-fit:cover;
+    object-position:50% 15%;
+    filter:saturate(0.92) contrast(1.05);
+  }
+  .hero::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(13,12,11,0.15) 0%, rgba(13,12,11,0.05) 35%, rgba(13,12,11,0.92) 92%);
+  }
+  .hero-content{
+    position:relative; z-index:5;
+    width:100%;
+    padding:0 5vw 64px;
+    display:flex; flex-direction:column; gap:18px;
+  }
+  .hero-eyebrow{
+    display:flex; align-items:center; gap:14px;
+    font-size:12px; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--amber-soft);
+  }
+  .hero-eyebrow .line{height:1px; width:48px; background:var(--amber-soft);}
+  .hero-name{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(64px, 14vw, 168px);
+    line-height:0.86;
+    letter-spacing:0.01em;
+    color:var(--bone);
+    text-transform:uppercase;
+  }
+  .hero-aka{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(20px,3.2vw,30px);
+    color:var(--bone-dim);
+    margin-top:-6px;
+  }
+  .hero-meta{
+    display:flex; gap:32px; flex-wrap:wrap;
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid var(--rule);
+    font-size:12px; letter-spacing:0.15em; text-transform:uppercase;
+    color:var(--bone-dim);
+  }
+  .hero-meta b{color:var(--amber-soft); font-weight:500;}
+
+  .scroll-cue{
+    position:absolute; bottom:28px; right:5vw; z-index:5;
+    writing-mode:vertical-rl;
+    font-size:11px; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--bone-dim);
+    display:flex; align-items:center; gap:10px;
+  }
+  .scroll-cue::after{
+    content:''; display:block; width:1px; height:34px; background:var(--bone-dim);
+    animation:dropline 2.2s ease-in-out infinite;
+  }
+  @keyframes dropline{
+    0%{transform:scaleY(0); transform-origin:top;}
+    50%{transform:scaleY(1); transform-origin:top;}
+    50.1%{transform-origin:bottom;}
+    100%{transform:scaleY(0); transform-origin:bottom;}
+  }
+
+  /* ===== SECTION LABEL ===== */
+  .section-label{
+    display:flex; align-items:center; gap:18px;
+    padding:0 5vw;
+    margin:0 0 36px;
+  }
+  .section-label .num{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:14px; color:var(--amber);
+    letter-spacing:0.1em;
+  }
+  .section-label .txt{
+    font-size:11px; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--bone-dim);
+  }
+  .section-label .rule{flex:1; height:1px; background:var(--rule);}
+
+  section{padding:110px 0 0;}
+
+  /* ===== LETTER ===== */
+  .letter{
+    padding:0 5vw 100px;
+    max-width:780px;
+  }
+  .letter .cap{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(40px,7vw,72px);
+    color:var(--amber-soft);
+    line-height:1;
+  }
+  .letter p{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(20px,2.6vw,28px);
+    line-height:1.65;
+    color:var(--bone);
+    font-weight:400;
+  }
+  .letter p + p{margin-top:22px;}
+  .letter .sign{
+    margin-top:40px;
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:20px;
+    color:var(--bone-dim);
+  }
+
+  /* ===== FILM STRIP (horizontal scroll lookbook) ===== */
+  .strip-wrap{padding-bottom:120px;}
+  .strip{
+    display:flex;
+    gap:18px;
+    overflow-x:auto;
+    padding:0 5vw 28px;
+    scroll-snap-type:x proximity;
+    scrollbar-width:none;
+  }
+  .strip::-webkit-scrollbar{display:none;}
+  .frame{
+    position:relative;
+    flex:0 0 auto;
+    width:min(78vw, 320px);
+    scroll-snap-align:start;
+    border-radius:2px;
+    overflow:hidden;
+    background:var(--ink-soft);
+  }
+  .frame img{
+    width:100%;
+    height:420px;
+    object-fit:cover;
+    display:block;
+    filter:saturate(0.95) contrast(1.04);
+    transition:transform .6s cubic-bezier(.16,1,.3,1), filter .6s;
+  }
+  .frame:hover img{transform:scale(1.045); filter:saturate(1.05) contrast(1.06);}
+  .frame .tag{
+    position:absolute; left:14px; bottom:14px; z-index:3;
+    font-size:11px; letter-spacing:0.18em; text-transform:uppercase;
+    color:var(--bone);
+    background:rgba(13,12,11,0.55);
+    padding:6px 10px;
+    backdrop-filter:blur(6px);
+  }
+  .frame .idx{
+    position:absolute; top:14px; right:14px; z-index:3;
+    font-family:'Bebas Neue',sans-serif;
+    font-size:13px;
+    color:var(--amber-soft);
+  }
+  .frame::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(13,12,11,0) 55%, rgba(13,12,11,0.65) 100%);
+    pointer-events:none;
+  }
+
+  /* ===== FEATURE SPLIT (two big portraits) ===== */
+  .split{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:2px;
+    padding:0 5vw;
+  }
+  .split-cell{position:relative; overflow:hidden; min-height:560px;}
+  .split-cell img{
+    width:100%; height:100%; object-fit:cover; position:absolute; inset:0;
+    filter:saturate(0.9) contrast(1.06);
+  }
+  .split-cell .cap{
+    position:absolute; left:24px; bottom:24px; z-index:3;
+    font-family:'Cormorant Garamond',serif; font-style:italic;
+    font-size:18px; color:var(--bone);
+  }
+  .split-cell::after{
+    content:''; position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(13,12,11,0) 60%, rgba(13,12,11,0.7) 100%);
+  }
+  @media (max-width:760px){
+    .split{grid-template-columns:1fr; gap:6px;}
+    .split-cell{min-height:440px;}
+  }
+
+  /* ===== STAT / TRAITS BAR ===== */
+  .traits{
+    padding:90px 5vw;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:36px;
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    margin:100px 0;
+  }
+  .trait .label{
+    font-size:11px; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--amber-soft); margin-bottom:10px;
+  }
+  .trait .val{
+    font-family:'Cormorant Garamond',serif;
+    font-size:clamp(18px,2vw,22px);
+    color:var(--bone-dim);
+    line-height:1.5;
+  }
+  @media (max-width:700px){
+    .traits{grid-template-columns:1fr; gap:30px;}
+  }
+
+  /* ===== CLOSING ===== */
+  .closing{
+    position:relative;
+    min-height:100svh;
+    display:flex; align-items:center; justify-content:center;
+    text-align:center;
+    overflow:hidden;
+    padding:80px 6vw;
+  }
+  .closing-img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    object-position:50% 20%;
+    filter:saturate(0.85) contrast(1.05) brightness(0.85);
+  }
+  .closing::after{
+    content:''; position:absolute; inset:0;
+    background:radial-gradient(ellipse at center, rgba(13,12,11,0.55) 0%, rgba(13,12,11,0.92) 78%);
+  }
+  .closing-content{position:relative; z-index:4; max-width:640px;}
+  .closing .eyebrow{
+    font-size:12px; letter-spacing:0.3em; text-transform:uppercase;
+    color:var(--amber-soft); margin-bottom:22px;
+  }
+  .closing h2{
+    font-family:'Bebas Neue',sans-serif;
+    font-size:clamp(46px,9vw,108px);
+    line-height:0.95;
+    color:var(--bone);
+    text-transform:uppercase;
+  }
+  .closing .sub{
+    font-family:'Cormorant Garamond',serif;
+    font-style:italic;
+    font-size:clamp(18px,2.4vw,24px);
+    color:var(--bone-dim);
+    margin-top:24px;
+    line-height:1.6;
+  }
+  .closing .date-stamp{
+    margin-top:46px;
+    display:inline-flex; align-items:center; gap:16px;
+    font-size:12px; letter-spacing:0.25em; text-transform:uppercase;
+    color:var(--bone);
+    border:1px solid var(--rule);
+    padding:14px 26px;
+  }
+  .closing .date-stamp b{color:var(--amber-soft); font-weight:500;}
+
+  footer{
+    text-align:center;
+    padding:30px 5vw 40px;
+    font-size:10px; letter-spacing:0.2em; text-transform:uppercase;
+    color:var(--bone-dim);
+    opacity:0.6;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    .scroll-cue::after{animation:none;}
+    .frame:hover img{transform:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<div class="masthead">
+  <span>Issue № 22 | SK Edition</span>
+  <span>S.K.</span>
+</div>
+
+<!-- HERO -->
+<section class="hero" style="padding:0;">
+  <img class="hero-img" src="hero.jpeg" alt="">
+  <div class="hero-content">
+    <div class="hero-eyebrow"><span class="line"></span> Happy Birthday</div>
+    <h1 class="hero-name">Sanaullah<br>Jabir</h1>
+    <p class="hero-aka">a.k.a. Sunny Khan</p>
+    <div class="hero-meta">
+      <div>Born <b>June 22</b></div>
+      <div>Based in <b>Wah Cantt</b></div>
+      <div>Status <b>On Top</b></div>
+    </div>
+  </div>
+  <div class="scroll-cue">Scroll the issue</div>
+</section>
+
+<!-- LETTER -->
+<section>
+  <div class="section-label">
+    <span class="num">01</span><span class="txt">The Note</span><span class="rule"></span>
+  </div>
+  <div class="letter">
+    <p class="cap">Find out who you are<br>and do it on purpose.</p>
+    <p>That's the line you live by and it shows. Not in a loud way, in the way you carry yourself: the tilt of the cap, the easy confidence in a park full of strangers, the calm in a kurta at golden hour. Some people dress for the day. You dress like every day might end up on someone's camera roll, and somehow it never feels forced.</p>
+    <p>A year older today. Same sharp eye, same quiet swagger, hopefully an even better playlist. Here's to the next lap around the sun may it be exactly as on-brand as this one.</p>
+  </div>
+</section>
+
+<!-- FILM STRIP -->
+<section class="strip-wrap">
+  <div class="section-label">
+    <span class="num">02</span><span class="txt">The Lookbook</span><span class="rule"></span>
+  </div>
+  <div class="strip">
+    <div class="frame">
+      <span class="idx">01</span>
+      <img src="park.jpeg" alt="">
+      <span class="tag">Park, Off-Duty</span>
+    </div>
+    <div class="frame">
+      <span class="idx">02</span>
+       <img src="stripes.jpeg" alt="">
+      <span class="tag">Stripes &amp; Stride</span>
+    </div>
+    <div class="frame">
+      <span class="idx">03</span>
+      <img src="wah.jpeg" alt="">
+      <span class="tag">Golden Hour, Wah</span>
+    </div>
+    <div class="frame">
+      <span class="idx">04</span>
+      <img src="all_black.jpeg" alt="">
+            <span class="tag">All Black Everything</span>
+    </div>
+    <div class="frame">
+      <span class="idx">05</span>
+     <img src="swat.jpeg" alt="">
+      <span class="tag">Swat, Socially Selective</span>
+    </div>
+    <div class="frame">
+      <span class="idx">06</span>
+      <img src="car.jpeg" alt="">
+      <span class="tag">On Top</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURE SPLIT -->
+<section style="padding-top:20px;">
+  <div class="section-label">
+    <span class="num">03</span><span class="txt">Signature Looks</span><span class="rule"></span>
+  </div>
+  <div class="split">
+    <div class="split-cell">
+      <img src="white.jpeg" alt="">
+      <span class="cap">Poise, grace, a little sparkle</span>
+    </div>
+    <div class="split-cell">
+      <img src="sidhu.jpeg" alt="">
+      <span class="cap">Sidhu in the speakers</span>
+    </div>
+  </div>
+</section>
+
+<!-- TRAITS -->
+<div class="traits">
+  <div class="trait">
+    <div class="label">The Aesthetic</div>
+    <div class="val">Streetwear by default, shalwar kameez when it counts never the wrong one at the wrong time.</div>
+  </div>
+  <div class="trait">
+    <div class="label">The Energy</div>
+    <div class="val">Quiet confidence, perfectly timed smirk, never overdressed for the moment, never underdressed either.</div>
+  </div>
+  <div class="trait">
+    <div class="label">The Soundtrack</div>
+    <div class="val">Bohemia, Sidhu Moose Wala, Karan Aujla on loop, on theme, always on top.</div>
+  </div>
+</div>
+
+<!-- CLOSING -->
+<section class="closing" style="padding:0;">
+  <img class="closing-img" src="horse.jpeg" alt="">
+  <div class="closing-content">
+    <div class="eyebrow">Ghora Sagar &amp; Beyond</div>
+    <h2>Ride into<br>another year</h2>
+    <p class="sub">Stay this unbothered. Stay this sharp. The best frames are still ahead of you, Sunny.</p>
+    <div class="date-stamp">Happy Birthday <b>Sanaullah Jabir</b></div>
+  </div>
+</section>
+
+<footer>Issue № 22 · June 22 · A small tribute</footer>
+
+</body>
+</html>
